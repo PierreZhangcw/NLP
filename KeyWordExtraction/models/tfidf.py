@@ -5,6 +5,7 @@
 # @content: tfidf model
 
 import math
+from ..utility.utility import *
 
 class TfIdf:
     def __init__(self,doc_list,keyword_num=10):
@@ -12,7 +13,7 @@ class TfIdf:
         self.doc_list = doc_list
         self.keyword_num = keyword_num # number of keywords return for each document
 
-        self.words_set = self.get_words_set()
+        self.words_set = get_words_set(doc_list)
         self.idf_dic,self.default_idf = self.get_idf_dic()
 
     def get_words_set(self):

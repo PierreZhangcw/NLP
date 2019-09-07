@@ -6,7 +6,8 @@
 
 from utility.utility import *
 from models.tfidf import TfIdf
-
+from jieba import analyse
+from models.topicModel import TopicModel
 
 def tfidf_extraction(doc,pos = False,keyword_num=10):
     '''
@@ -20,6 +21,20 @@ def tfidf_extraction(doc,pos = False,keyword_num=10):
     model = TfIdf(doc_list,keyword_num)
     key_words = model.get_key_words(doc)
     print('/'.join(key_words))
+
+def textrank_extract(text,pos=False,keyword_num=10):
+    textrank = analyse.textrank
+    keywords = textrank(text, keyword_num)
+    # 输出抽取出的关键词
+    for keyword in keywords:
+        print(keyword + "/ ", end='')
+    print()
+
+
+def topic_extract(word_list, model, pos=False, keyword_num=10):
+    doc_list = load_data(pos)
+    topic_model = TopicModel(doc_list, keyword_num, model=model)
+    topic_model.get_simword(word_list)
 
 
 if __name__=='__main__':

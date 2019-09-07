@@ -6,6 +6,7 @@
 
 import jieba
 import jieba.posseg as psg
+import numpy as np
 
 def get_stop_word(path='data/stopword.txt'):
     '''
@@ -60,3 +61,27 @@ def load_data(pos=False,corpus_path='data/corpus.txt'):
         filter_list = word_filter(seg_list,pos)
         doc_list.append(filter_list)
     return doc_list
+
+def get_words_set(doc_list):
+    '''
+    static all words in doc_list
+    :return: set of words
+    '''
+    words_set = set()
+    for doc in doc_list:
+        words_set.update(doc)
+    return words_set
+
+def cmp(e1,e2):
+    res = np.sign(e1[1]-e2[1])
+    if res!=0:
+        return res
+    else:
+        a = e1[0]+e2[0]
+        b = e2[0]+e1[0]
+        if a>b:
+            return 1
+        elif a==b:
+            return 0
+        else:
+            return -1
