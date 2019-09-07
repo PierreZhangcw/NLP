@@ -49,5 +49,10 @@ if __name__=='__main__':
            '的宣传方案。会上,中华社会救助基金会与“第二届中国爱心城市大会”承办方晋江市签约,许嘉璐理' + \
            '事长接受晋江市参与“百万孤老关爱行动”向国家重点扶贫地区捐赠的价值400万元的款物。晋江市人大' + \
            '常委会主任陈健倩介绍了大会的筹备情况。'
+
     doc = word_filter(seg_to_list(text))
     tfidf_extraction(doc)
+
+    textrank_extract(text)
+
+    topic_extract(doc,model='lda')

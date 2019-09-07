@@ -7,7 +7,9 @@
 import math
 import functools
 from gensim import corpora,models
-from ..utility.utility import *
+import sys
+sys.path.append("..")
+from utility.utility import *
 
 class TopicModel(object):
     def __init__(self,doc_list,keyword_num,model='LSI',num_topics=4):
@@ -50,13 +52,15 @@ class TopicModel(object):
 
         # cosin similarity
         def calsim(l1,l2):
-            l12 = l1[0]*l2[0]+l1[1]*l2[1]
-            t1 = l1[0]**2+l1[1]**2
-            t2 = l2[0]**2+l2[1]**2
-            if t1*t2==0:
-                return 0
-            else:
-                return  l12/math.sqrt(t1*t2)
+            a, b, c = 0.0, 0.0, 0.0
+            for t1, t2 in zip(l1, l2):
+                x1 = t1[1]
+                x2 = t2[1]
+                a += x1 * x1
+                b += x1 * x1
+                c += x2 * x2
+            sim = a / math.sqrt(b * c) if not (b * c) == 0.0 else 0.0
+            return sim
 
             # similarity of each word with input doc
         sim_dic = {}
@@ -65,7 +69,7 @@ class TopicModel(object):
                 sim = calsim(v,senttopic)
                 sim_dic[k] = sim
 
-        for k,v in sorted(tfidf_dic.items(),key=functools.cmp_to_key(cmp),reverse=True)[:self.keyword_num]:
+        for k,v in sorted(sim_dic.items(),key=functools.cmp_to_key(cmp),reverse=True)[:self.keyword_num]:
             print(k+"/",end = '')
         print()
 

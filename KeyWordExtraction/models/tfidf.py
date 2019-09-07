@@ -5,7 +5,9 @@
 # @content: tfidf model
 
 import math
-from ..utility.utility import *
+import sys
+sys.path.append("..")
+from utility.utility import *
 
 class TfIdf:
     def __init__(self,doc_list,keyword_num=10):
